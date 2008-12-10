@@ -121,7 +121,7 @@ public class Table implements EventList {
   
     
     if (shouldGetMonster()) {
-      entry = mMonsters.get((int)(Math.random() * (mMonsters.size() - 1)));
+      entry = mMonsters.get((int)(Math.random() * (mMonsters.size() - 1))).getMonsters();
     } else if (mEvents.size() > 0) {
       entry = mEvents.get((int)(Math.random() * (mEvents.size() - 1)));
     }

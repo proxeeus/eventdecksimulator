@@ -282,14 +282,15 @@ public class MonsterCardPanel extends CardPanel implements ActionListener {
   }
   
   public void paintComponent(Graphics g) {
-    super.paintComponent(g);
     
+    super.paintComponent(g);
     Graphics2D g2d = (Graphics2D)g.create();
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
                          RenderingHints.VALUE_ANTIALIAS_ON);
     
     //  Fill the bottom area with a gradient
     if (mBottomPanel != null) {
+
       Paint p = g2d.getPaint();
       
       Shape clip = g2d.getClip();
@@ -306,7 +307,10 @@ public class MonsterCardPanel extends CardPanel implements ActionListener {
       
       g2d.setClip(clip);
       g2d.setPaint(p);
+      mBottomPanel.paintAll(mBottomPanel.getGraphics());
     }
+
+
   }
   
   public void actionPerformed(ActionEvent e) {

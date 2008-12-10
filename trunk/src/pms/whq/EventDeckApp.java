@@ -31,6 +31,7 @@ import pms.whq.data.Deck;
 import pms.whq.data.EventList;
 import pms.whq.data.Table;
 import pms.whq.data.EventEntry;
+import pms.whq.data.MonsterContainer;
 import pms.whq.data.Rule;
 
 /**
@@ -362,6 +363,8 @@ public class EventDeckApp extends JFrame
       
       if (o instanceof List) {
         checkEntries((List)o, tableName);
+      } else if (o instanceof MonsterContainer) {
+          checkEntries(((MonsterContainer) o).getMonsters(), tableName);
       } else if (o instanceof MonsterEntry) {
         if (!mMonsters.containsKey(((MonsterEntry)o).id)) {
           StringBuffer buf = new StringBuffer();

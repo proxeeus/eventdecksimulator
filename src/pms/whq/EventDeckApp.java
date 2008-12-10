@@ -58,6 +58,7 @@ public class EventDeckApp extends JFrame
   protected JMenuItem   mSetPartySize;
   protected JMenuItem   mSetEventProbability;
   protected JMenuItem   mHelpAbout;
+  protected JCheckBoxMenuItem   mAutoCloseCards;
     
   protected Point       mNextCardLocation;
   
@@ -153,6 +154,11 @@ public class EventDeckApp extends JFrame
     mSetEventProbability.setEnabled(!asDeck);
         
     optionsMenu.add(mAsTableSetting);
+    optionsMenu.addSeparator();
+    mAutoCloseCards = new JCheckBoxMenuItem("Automatically Close Cards");
+    mAutoCloseCards.setSelected(Settings.getSettingAsBool(Settings.AUTO_CLOSE_CARDS));
+    optionsMenu.add(mAutoCloseCards);
+    mAutoCloseCards.addActionListener(this);
     
     JMenu helpMenu = new JMenu("Help");
     
@@ -188,6 +194,8 @@ public class EventDeckApp extends JFrame
       mSetEventProbability.setEnabled(mAsTableSetting.isSelected());
     } else if (source == mHelpAbout) {
       AboutDialog.showAbout();
+    } else if (source == mAutoCloseCards) {
+
     }
   }
 
@@ -208,10 +216,14 @@ public class EventDeckApp extends JFrame
     
     //  If we have events, pull the next one
     if (mEventList.size() > 0) {
-      mNextCardLocation = new Point(0, 0);
+      if (mNextCardLocation == null)
+        mNextCardLocation = new Point(0, 0);
       Object entry = mEventList.getEntry();
       if (entry != null) {
-        closeAllCards();
+        if (mAutoCloseCards.isSelected()) {
+            closeAllCards();
+        }
+           
         showCard(entry);
       } else {
         System.err.println("Null entry found.");
@@ -263,7 +275,9 @@ public class EventDeckApp extends JFrame
   }
   
   public void windowOpened(WindowEvent e) {}
-  public void windowClosed(WindowEvent e) {}
+  public void windowClosed(WindowEvent e) {
+    
+  }
   public void windowIconified(WindowEvent e) {}
   public void windowDeiconified(WindowEvent e) {}
   public void windowActivated(WindowEvent e) {}
@@ -272,6 +286,13 @@ public class EventDeckApp extends JFrame
   public void windowClosing(WindowEvent e) {
     if (e.getWindow() == this) {
       persistOptions();
+    } else {
+        if (mCurrentCards != null) {
+            boolean remove = mCurrentCards.remove(e.getWindow());
+            if (remove && mCurrentCards.size() == 0) {
+                closeAllCards();
+            }
+        }
     }
   }
 
@@ -542,6 +563,14 @@ public class EventDeckApp extends JFrame
       cardFrame.setContentPane(cardPanel);
       cardFrame.pack();
       cardFrame.setVisible(true);
+      cardFrame.addWindowListener(this);
+
+//      JMenuBar bar = new JMenuBar();
+//      JMenu menu = new JMenu("File");
+//      bar.add(menu);
+//      JMenuItem menuItem = new JMenuItem("Close");
+//      menuItem.setAccelerator(KeyStroke.getKeyStroke(
+//        KeyEvent.VK_W, ActionEvent.CTRL_MASK));
       
       cardFrame.setLocation(mNextCardLocation);      
       mNextCardLocation.x += cardFrame.getWidth();
@@ -579,19 +608,21 @@ public class EventDeckApp extends JFrame
   }
   
   protected void closeAllCards() {
+    
     Iterator i = mCurrentCards.iterator();
     while (i.hasNext()) {
       JFrame card = (JFrame)(i.next());
       card.dispose();
     }
-    
+    mNextCardLocation = new Point(0,0);
     mCurrentCards.clear();
   }
   
   protected void persistOptions() {
     Settings.setSetting(Settings.SIMULATE_DECK, 
       String.valueOf(mAsDeckSetting.isSelected()));
-    
+
+    Settings.setSetting(Settings.AUTO_CLOSE_CARDS, String.valueOf(mAutoCloseCards.isSelected()));
     Iterator i = mTables.values().iterator();
     while (i.hasNext()) {
       Table table = (Table)i.next();

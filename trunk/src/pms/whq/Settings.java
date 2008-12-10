@@ -40,6 +40,8 @@ public class Settings  {
   
   public static final String SIMULATE_DECK    = "SimulateDeck";
   public static final String PARTY_SIZE       = "PartySize";
+
+  public static final String AUTO_CLOSE_CARDS = "AutoCloseCards";
   
   public static final String EVENT_PROBABILITY  = "EventPropability";
   
@@ -65,6 +67,8 @@ public class Settings  {
     
     mSettings.setProperty(PARTY_SIZE, "4");
     mSettings.setProperty(EVENT_PROBABILITY, "37"); //  Based on original deck stats
+
+    mSettings.setProperty(AUTO_CLOSE_CARDS, "true");
     
     mFonts = new HashMap();
   }

@@ -1,4 +1,5 @@
-#summary Readme Page
+#summary About the program and usage instructions.
+#labels readme,Featured
 
 = Introduction =
 
@@ -32,7 +33,6 @@ fit in its allocated space.
 Text within the special rules area may contain hyperlinked keywords.  Clicking
 on one of these keywords will display a rules window containing the full text of
 the special rule.  
-
 
 =Options=
 
@@ -92,6 +92,7 @@ be chosen rather than a monster.  The default value for this is 37% as the
 original event deck was comprised of 19 cards of which 7 were events, which is
 roughly 37%.
 
+-----------
 
 =Customization=
 
@@ -116,10 +117,11 @@ with the same name.
 
 The data/xml directory contains the follow subdirectories:
 
-events    - containing event data
-monsters  - containing monster data
-rules     - containing text for special rules
-tables    - containing table definitions (lists of monsters and events)
+
+  * events    - containing event data
+  * monsters  - containing monster data
+  * rules     - containing text for special rules
+  * tables    - containing table definitions (lists of monsters and events)
 
 The application will load all .xml files found in these directories, assuming 
 they are formatted in an expected manner.  Each directory contains a schema

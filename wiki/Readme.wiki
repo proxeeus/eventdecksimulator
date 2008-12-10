@@ -59,7 +59,7 @@ or less than four players?  This setting allows you to enter the number of
 warriors in your group.  The number of monsters appearing will then be scaled to
 that number of warriors (to a minimum of 1).
 
-The number of monsters appearing is multiplied by (party size * 25) %.  This
+The number of monsters appearing is multiplied by `(party size * 25) %`.  This
 means if you have a party size of 6, the number of monsters will be multiplied
 by 150%.
 
